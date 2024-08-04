@@ -51,7 +51,7 @@ function cardFormSubmit(evt) {
   };
   const resultCard = createCard(card, removeCard, showCard, likeCard);
   placesList.prepend(resultCard);
-  form.reset();
+  formNewCard.reset();
   closeModal(addModal);
 }
 
