@@ -1,4 +1,4 @@
-export { openModal, closeModal, keyClose, overlayClose };
+export { openModal, closeModal, overlayClose };
 
 function openModal(popap) {
   popap.classList.add("popup_is-opened");
