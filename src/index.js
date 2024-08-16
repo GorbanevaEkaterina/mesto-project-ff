@@ -2,6 +2,7 @@ import "./pages/index.css";
 import initialCards from "./components/сards.js";
 import { createCard, removeCard, likeCard } from "./components/card.js";
 import { openModal, closeModal, overlayClose } from "./components/modal.js";
+import { showInputError, hideInputError, checkInputValidity, setEventListeners,enableValidation, hasInvalidInput, toggleButtonState, clearValidation} from "./components/validation.js";
 
 const placesList = document.querySelector(".places__list");
 
@@ -70,3 +71,18 @@ formNewCard.addEventListener("submit", cardFormSubmit);
 editModal.addEventListener("click", overlayClose);
 addModal.addEventListener("click", overlayClose);
 popupTypeImage.addEventListener("click", overlayClose);
+
+
+// валидация форм
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input-error',
+  errorClass: 'popup__input-error_active'
+}
+
+ enableValidation(validationConfig);
+
+clearValidation(addModal, validationConfig);
