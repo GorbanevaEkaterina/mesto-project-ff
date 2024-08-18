@@ -41,6 +41,7 @@ function editModalSubmit(evt) {
   evt.preventDefault();
   nameElement.textContent = editName.value;
   descriptionElement.textContent = editDescription.value;
+  clearValidation(editModal, validationConfig);
   closeModal(editModal);
 }
 
@@ -52,18 +53,23 @@ function cardFormSubmit(evt) {
   };
   const resultCard = createCard(card, removeCard, showCard, likeCard);
   placesList.prepend(resultCard);
+  
   formNewCard.reset();
+  
   closeModal(addModal);
 }
 
 editOpen.addEventListener("click", function () {
+  clearValidation(editModal, validationConfig);
   openModal(editModal);
 });
 
 addProfile.addEventListener("click", function () {
+  clearValidation(addModal, validationConfig);
   openModal(addModal);
   editName.value = nameElement.textContent;
   editDescription.value = descriptionElement.textContent;
+  
 });
 
 formProfile.addEventListener("submit", editModalSubmit);
@@ -74,15 +80,58 @@ popupTypeImage.addEventListener("click", overlayClose);
 
 
 // валидация форм
-const validationConfig = {
+export const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input-error',
+  inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active'
 }
 
  enableValidation(validationConfig);
 
-clearValidation(addModal, validationConfig);
+
+
+//// API
+const config = {
+  baseUrl: 'https://nomoreparties.co/v1/wff-cohort-21',
+  headers: {
+    authorization: '4aea4398-89d6-49a4-ae19-ce46f4c5d123',
+    'Content-Type': 'application/json'
+  }
+}
+
+function getInitialUser(){
+  fetch('https://nomoreparties.co/v1/wff-cohort-21/users/me', {
+    method: 'GET',
+    headers: {
+     authorization:'4aea4398-89d6-49a4-ae19-ce46f4c5d123'
+   }})
+.then(res => res.json())
+.then(data => console.log(data));
+  }
+
+getInitialUser();
+
+
+// function getInitialCards(){
+//    return fetch('https://nomoreparties.co/v1/wff-cohort-21/cards', {
+//     headers: {
+//       authorization:'4aea4398-89d6-49a4-ae19-ce46f4c5d123'
+//     }
+//   })
+//   .then((res) => {
+//     return res.json();
+//     })
+//     .then((data) => {
+//     data.forEach(function (card) {
+//       const placesCard = createCard(card, removeCard, showCard, likeCard);
+//       placesList.append(placesCard);
+//     })
+//     })
+//     };
+    
+
+
+// getInitialCards();
