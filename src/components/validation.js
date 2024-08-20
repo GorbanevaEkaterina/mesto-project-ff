@@ -1,6 +1,13 @@
-export { showInputError, hideInputError, checkInputValidity, setEventListeners,enableValidation, hasInvalidInput, toggleButtonState};
-import { validationConfig } from "../index.js";
+export { enableValidation};
 
+export const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+}
 
 
 const showInputError = (formSelector, inputSelector, errorMessage) => {

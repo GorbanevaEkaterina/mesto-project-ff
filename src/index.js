@@ -2,14 +2,15 @@ import "./pages/index.css";
 import initialCards from "./components/сards.js";
 import { createCard, removeCard, likeCard } from "./components/card.js";
 import { openModal, closeModal, overlayClose } from "./components/modal.js";
-import { showInputError, hideInputError, checkInputValidity, setEventListeners,enableValidation, hasInvalidInput, toggleButtonState, clearValidation} from "./components/validation.js";
+import {
+  enableValidation,
+  clearValidation,
+  validationConfig,
+} from "./components/validation.js";
+import {getInitialUser, updateInitialUser, getInitialCards, postInitialCards} from "./components/api.js";
 
 const placesList = document.querySelector(".places__list");
 
-initialCards.forEach(function (card) {
-  const placesCard = createCard(card, removeCard, showCard, likeCard);
-  placesList.append(placesCard);
-});
 
 const editModal = document.querySelector(".popup_type_edit");
 const editName = document.querySelector(".popup__input_type_name");
@@ -39,25 +40,60 @@ function showCard(evt) {
 
 function editModalSubmit(evt) {
   evt.preventDefault();
-  nameElement.textContent = editName.value;
-  descriptionElement.textContent = editDescription.value;
+  updateInitialUser({ name: editName.value, about: editDescription.value })
+    .then((res) => {
+      nameElement.textContent = res.name;
+      descriptionElement.textContent = res.about;
+      closeModal(editModal);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  
   clearValidation(editModal, validationConfig);
   closeModal(editModal);
+}
+// добавляю карточки
+function addCards(card, removeCard) {
+  const resultCard = createCard(card, removeCard, showCard, likeCard);
+  placesList.prepend(resultCard);
 }
 
 function cardFormSubmit(evt) {
   evt.preventDefault();
-  const card = {
-    name: placeNameInput.value,
-    link: linkInput.value,
-  };
-  const resultCard = createCard(card, removeCard, showCard, likeCard);
-  placesList.prepend(resultCard);
+  postInitialCards({ name: placeNameInput.value, link: linkInput.value })
+  .then((card) => {
+    addCards({
+      name: card.name,
+      link: card.link,
+      cardId: card._id,
+      cardOwnerId: card.owner._id,
+      myId: card.owner._id,
+      likes: card.likes
+    }, removeCard);
+    formNewCard.reset();
+    closeModal(addModal);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
   
-  formNewCard.reset();
-  
-  closeModal(addModal);
 }
+
+Promise.all([getInitialCards()])
+.then(([cardsArray]) => {
+  cardsArray.reverse().forEach(card => addCards(
+    {
+      name: card.name,
+      link: card.link,
+      cardId: card._id,
+      cardOwnerId: card.owner._id,
+      // myId: myUserData._id,
+      likes: card.likes
+    }, removeCard))
+
+})
+.catch(err => { console.log(err) });
 
 editOpen.addEventListener("click", function () {
   clearValidation(editModal, validationConfig);
@@ -69,7 +105,6 @@ addProfile.addEventListener("click", function () {
   openModal(addModal);
   editName.value = nameElement.textContent;
   editDescription.value = descriptionElement.textContent;
-  
 });
 
 formProfile.addEventListener("submit", editModalSubmit);
@@ -78,60 +113,8 @@ editModal.addEventListener("click", overlayClose);
 addModal.addEventListener("click", overlayClose);
 popupTypeImage.addEventListener("click", overlayClose);
 
-
 // валидация форм
-export const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-}
 
- enableValidation(validationConfig);
+enableValidation(validationConfig);
 
 
-
-//// API
-const config = {
-  baseUrl: 'https://nomoreparties.co/v1/wff-cohort-21',
-  headers: {
-    authorization: '4aea4398-89d6-49a4-ae19-ce46f4c5d123',
-    'Content-Type': 'application/json'
-  }
-}
-
-function getInitialUser(){
-  fetch('https://nomoreparties.co/v1/wff-cohort-21/users/me', {
-    method: 'GET',
-    headers: {
-     authorization:'4aea4398-89d6-49a4-ae19-ce46f4c5d123'
-   }})
-.then(res => res.json())
-.then(data => console.log(data));
-  }
-
-getInitialUser();
-
-
-// function getInitialCards(){
-//    return fetch('https://nomoreparties.co/v1/wff-cohort-21/cards', {
-//     headers: {
-//       authorization:'4aea4398-89d6-49a4-ae19-ce46f4c5d123'
-//     }
-//   })
-//   .then((res) => {
-//     return res.json();
-//     })
-//     .then((data) => {
-//     data.forEach(function (card) {
-//       const placesCard = createCard(card, removeCard, showCard, likeCard);
-//       placesList.append(placesCard);
-//     })
-//     })
-//     };
-    
-
-
-// getInitialCards();
