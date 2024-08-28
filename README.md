@@ -1,3 +1,3 @@
 # Проектная работа Mesto
 
-https://github.com/GorbanevaEkaterina/mesto-project-ff
+https://gorbanevaekaterina.github.io/mesto-project-ff/
