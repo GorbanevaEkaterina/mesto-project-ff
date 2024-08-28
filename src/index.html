@@ -62,7 +62,7 @@
         <span class="popup__input-error place-name-input-error" ></span>
       </label>
       <label class="form__field">
-        <input pattern="$+[https?:\/\/]" data-error-message="Введите адрес сайта" id="link-input"  type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+        <input pattern="^https:\/\/.+" data-error-message="Введите адрес изображения" id="link-input"  type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
         <span class="popup__input-error link-input-error" ></span>
       </label>
         <button disabled type="submit" class="button popup__button">Сохранить</button>
@@ -84,7 +84,7 @@
       <form class="popup__form" name="new__avatar" novalidate>
         <fieldset class="form__set">
       <label class="form__field">
-        <input pattern="$+[https?:\/\/]" data-error-message="Введите адрес сайта" id="avatar-input"  type="url" name="avatar" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+        <input pattern="^https:\/\/.+" data-error-message="Введите адрес сайта" id="avatar-input"  type="url" name="avatar" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
         <span class="popup__input-error avatar-input-error" ></span>
       </label>
         <button disabled type="submit" class="button popup__button">Сохранить</button>
