@@ -2,6 +2,7 @@ export { enableValidation };
 
 export const validationConfig = {
   formSelector: ".popup__form",
+  formSet: ".form__set",
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
   inactiveButtonClass: "popup__button_disabled",
@@ -16,7 +17,7 @@ const showInputError = (formSelector, inputSelector, errorMessage) => {
   errorElement.classList.add(validationConfig.errorClass);
 };
 
-const hideInputError = (formSelector, inputSelector) => {
+const hideInputError = (formSelector, inputSelector, validationConfig) => {
   const errorElement = formSelector.querySelector(`.${inputSelector.id}-error`);
   inputSelector.classList.remove(validationConfig.inputErrorClass);
   errorElement.classList.remove(validationConfig.errorClass);
@@ -57,7 +58,7 @@ const setEventListeners = (formSelector) => {
   });
 };
 
-const enableValidation = () => {
+const enableValidation = (validationConfig) => {
   const formList = Array.from(
     document.querySelectorAll(validationConfig.formSelector)
   );
@@ -66,11 +67,11 @@ const enableValidation = () => {
       evt.preventDefault();
     });
     const fieldsetList = Array.from(
-      formSelector.querySelectorAll(".form__set")
+      formSelector.querySelectorAll(validationConfig.formSet)
     );
 
     fieldsetList.forEach((fieldset) => {
-      setEventListeners(fieldset);
+      setEventListeners(fieldset, validationConfig);
     });
   });
 };
@@ -81,7 +82,7 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
-const toggleButtonState = (inputList, submitButtonSelector) => {
+const toggleButtonState = (inputList, submitButtonSelector, validationConfig) => {
   if (hasInvalidInput(inputList)) {
     submitButtonSelector.disabled = true;
     submitButtonSelector.classList.add(validationConfig.inactiveButtonClass);
