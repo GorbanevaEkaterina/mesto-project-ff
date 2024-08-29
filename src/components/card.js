@@ -6,7 +6,7 @@ const createCard = (
   deleteCardItem,
   likeCardItem,
   handleImageClick,
-  idData
+  cardId
 ) => {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate
@@ -25,7 +25,7 @@ const createCard = (
     handleImageClick(data);
   });
 
-  if (idData === data.owner._id) {
+  if (cardId === data.owner._id) {
     removeCardButton.classList.add("card__delete-button_visible");
   }
 
@@ -37,7 +37,7 @@ const createCard = (
     likeCardItem(likeButton, data._id, likeCount);
   });
 
-  if (data.likes.some((item) => item._id === idData)) {
+  if (data.likes.some((item) => item._id === cardId)) {
     likeButton.classList.add("card__like-button_is-active");
   }
 
@@ -46,14 +46,20 @@ const createCard = (
   return cardElement;
 };
 
-const removeCard = (data, idData) => {
-  data.remove();
-  deleteCard(idData);
+
+const removeCard = (cardElement, cardId) => {
+  deleteCard(cardId)
+  .then(() => {
+    cardElement.remove();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
 
-const likeCard = (likeButton, idData, likeCounter) => {
+const likeCard = (likeButton, cardId, likeCounter) => {
   if (!likeButton.classList.contains("card__like-button_is-active")) {
-    putlikeCard(idData)
+    putlikeCard(cardId)
       .then((data) => {
         likeCounter.textContent = data.likes.length;
         likeButton.classList.add("card__like-button_is-active");
@@ -62,7 +68,7 @@ const likeCard = (likeButton, idData, likeCounter) => {
         console.log(err);
       });
   } else {
-    disLikeCard(idData)
+    disLikeCard(cardId)
       .then((data) => {
         likeCounter.textContent = data.likes.length;
         likeButton.classList.remove("card__like-button_is-active");
