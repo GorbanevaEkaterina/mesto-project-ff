@@ -82,7 +82,7 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
-const toggleButtonState = (inputList, submitButtonSelector, validationConfig) => {
+const toggleButtonState = (inputList, submitButtonSelector) => {
   if (hasInvalidInput(inputList)) {
     submitButtonSelector.disabled = true;
     submitButtonSelector.classList.add(validationConfig.inactiveButtonClass);

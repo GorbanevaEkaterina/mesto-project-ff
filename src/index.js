@@ -1,5 +1,5 @@
 import "./pages/index.css";
-import initialCards from "./components/сards.js";
+
 
 import { createCard, removeCard, likeCard } from "./components/card.js";
 import { openModal, closeModal, overlayClose } from "./components/modal.js";
