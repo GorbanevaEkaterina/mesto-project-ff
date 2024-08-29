@@ -9,10 +9,10 @@ import {
   validationConfig,
 } from "./components/validation.js";
 import {
-  getInitialUser,
-  updateInitialUser,
+  getUser,
+  updateUser,
   getInitialCards,
-  postInitialCards,
+  addCard,
   updateAvatar,
   deleteCard,
 } from "./components/api.js";
@@ -91,7 +91,7 @@ const handleFormSubmitEditProfile = (evt) => {
   changeSubmitTextOnLoad(true, submitButton);
   const title = editProfileNameInput.value;
   const description = editProfileDescriptionInput.value;
-  updateInitialUser(title, description)
+  updateUser(title, description)
     .then(() => {
       nameElement.textContent = title;
       descriptionElement.textContent = description;
@@ -148,7 +148,7 @@ const handleFormSubmitNewCard = (evt) => {
   changeSubmitTextOnLoad(true, submitButton);
   const name = placeNameInput.value;
   const link = linkInput.value;
-  postInitialCards(name, link)
+  addCard(name, link)
     .then((data) => {
       cardСontainer.prepend(
         createCard(data, removeCard, likeCard, openImageCard, data.owner._id)
@@ -185,7 +185,7 @@ const renderCard = (item, userId) => {
   cardСontainer.append(cardElement);
 };
 
-Promise.all([getInitialUser(), getInitialCards()])
+Promise.all([getUser(), getInitialCards()])
   .then(([dataUser, dataCards]) => {
     let userId = dataUser._id;
     nameElement.textContent = dataUser.name;

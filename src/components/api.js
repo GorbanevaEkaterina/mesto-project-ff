@@ -13,16 +13,16 @@ const config = {
     return Promise.reject(`Ошибка: ${response.status}`);
   }
   
-  export const getInitialUser = () => {
+  export const getUser = () => {
     return fetch(`${config.baseUrl}/users/me`, {
       method: "GET",
       headers: config.headers,
     })
-    .then(res => handleResponse(res));
+    .then(handleResponse);
   };
   
   
-  export const updateInitialUser = (name, about) => {
+  export const updateUser = (name, about) => {
     return fetch(`${config.baseUrl}/users/me`, {
             method: "PATCH",
             headers: config.headers,
@@ -31,7 +31,7 @@ const config = {
                   about: about,
             }),
           })
-          .then(res => handleResponse(res));
+          .then(handleResponse);
   }
   
   export const getInitialCards = () => {
@@ -39,10 +39,10 @@ const config = {
       method: "GET",
       headers: config.headers,
     })
-      .then(res => handleResponse(res))
+    .then(handleResponse);
 }
 
-export const postInitialCards = (name, link) => {
+export const addCard = (name, link) => {
     return fetch(`${config.baseUrl}/cards`, {
       method: "POST",
       headers: config.headers,
@@ -51,7 +51,7 @@ export const postInitialCards = (name, link) => {
               link: link,
             }),
     })
-      .then(res => handleResponse(res))
+    .then(handleResponse);
 }
 export const updateAvatar = (avatar) => {
   return fetch(`${config.baseUrl}/users/me/avatar`, {
@@ -59,7 +59,7 @@ export const updateAvatar = (avatar) => {
           headers: config.headers,
           body: JSON.stringify({avatar: avatar,}),
         })
-        .then(res => handleResponse(res));
+        .then(handleResponse);
 }
   
 export const putlikeCard = (cardId) => {
@@ -73,7 +73,7 @@ export const disLikeCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     headers: config.headers,
     method: "DELETE",
-  }).then(res => handleResponse(res));
+  }).then(handleResponse);
 };
 
 export const deleteCard = (cardId) => {
@@ -81,7 +81,7 @@ export const deleteCard = (cardId) => {
       method: 'DELETE',
       headers: config.headers
   }) 
-  .then(res => handleResponse(res));
+  .then(handleResponse);
 }
 
 
