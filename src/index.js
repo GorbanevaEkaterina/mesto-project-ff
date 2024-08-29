@@ -1,6 +1,4 @@
 import "./pages/index.css";
-
-
 import { createCard, removeCard, likeCard } from "./components/card.js";
 import { openModal, closeModal, overlayClose } from "./components/modal.js";
 import {
@@ -17,56 +15,29 @@ import {
   deleteCard,
 } from "./components/api.js";
 
-// контейнер в который добавляю карточки cardСontainer
-const cardСontainer = document.querySelector(".places__list");
-
-// кнопки, которые открывают модальные окна
-const buttonOpenModalEditProfile = document.querySelector(
-  ".profile__edit-button"
-); // кнопка редактирования профиля
-
-const buttonOpenModalAddNewCard = document.querySelector(
-  ".profile__add-button"
-); // кнопка добавления новой карточки
-
-// модальные окна
-const modalEditProfile = document.querySelector(".popup_type_edit"); // модалка редактирования профиля
-const modalAddNewCard = document.querySelector(".popup_type_new-card"); // модалка добавления новой карты
-
-// инпуты модального окна добавления карточки
-const placeNameInput = modalAddNewCard.querySelector(
-  ".popup__input_type_place-name"
-);
-const linkInput = modalAddNewCard.querySelector(".popup__input_type_url");
-
-//модальное окно увеличение картинки и его содержимое
-const modalTypeImage = document.querySelector(".popup_type_image");
-const imageModalContent = modalTypeImage.querySelector(
-  ".popup__content_content_image"
-);
-const modalCaption = imageModalContent.querySelector(".popup__caption");
-const modalImage = imageModalContent.querySelector(".popup__image");
-// инпуты редактирования профиля имя и занятие в модальном окне
-const editProfileNameInput = document.querySelector(".popup__input_type_name");
-const editProfileDescriptionInput = document.querySelector(
-  ".popup__input_type_description"
-);
-
-//поиск элемента через форму
-
-const formProfile = document.forms.edit__profile;
-const formNewCard = document.forms.new__place;
-const formNewAvatar = document.forms.new__avatar;
-
-// элемены редактирования профиля
-const nameElement = document.querySelector(".profile__title"); // имя
-const descriptionElement = document.querySelector(".profile__description"); // занятия
-
-// редактирование аватара
-const editProfileImageForm = document.forms.new__avatar;
-const profileAvatar = document.querySelector(".profile__image");
-const editAvatar = document.querySelector(".popup_type_new_avatar");
-const profileImageInput = formNewAvatar.elements.avatar;
+import {
+  cardСontainer,
+  buttonOpenModalEditProfile,
+  buttonOpenModalAddNewCard,
+  modalEditProfile,
+  modalAddNewCard,
+  placeNameInput,
+  linkInput,
+  modalTypeImage,
+  modalCaption,
+  modalImage,
+  editProfileNameInput,
+  editProfileDescriptionInput,
+  formProfile,
+  formNewCard,
+  formNewAvatar,
+  nameElement,
+  descriptionElement,
+  editProfileImageForm,
+  profileAvatar,
+  editAvatar,
+  profileImageInput,
+} from "./components/constants.js";
 
 const changeSubmitTextOnLoad = (checkStatus, itemButton) => {
   if (checkStatus) {
@@ -154,6 +125,7 @@ const handleFormSubmitNewCard = (evt) => {
         createCard(data, removeCard, likeCard, openImageCard, data.owner._id)
       );
       closeModal(modalAddNewCard);
+      evt.target.reset();
     })
     .catch((err) => {
       console.log(err);
@@ -161,7 +133,6 @@ const handleFormSubmitNewCard = (evt) => {
     .finally(() => {
       changeSubmitTextOnLoad(false, submitButton);
     });
-  evt.target.reset();
 };
 
 buttonOpenModalAddNewCard.addEventListener("click", addNewCard);

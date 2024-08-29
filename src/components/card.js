@@ -46,15 +46,14 @@ const createCard = (
   return cardElement;
 };
 
-
 const removeCard = (cardElement, cardId) => {
   deleteCard(cardId)
-  .then(() => {
-    cardElement.remove();
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .then(() => {
+      cardElement.remove();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const likeCard = (likeButton, cardId, likeCounter) => {

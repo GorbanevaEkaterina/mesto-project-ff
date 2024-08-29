@@ -17,7 +17,7 @@ const showInputError = (formSelector, inputSelector, errorMessage) => {
   errorElement.classList.add(validationConfig.errorClass);
 };
 
-const hideInputError = (formSelector, inputSelector, validationConfig) => {
+const hideInputError = (formSelector, inputSelector) => {
   const errorElement = formSelector.querySelector(`.${inputSelector.id}-error`);
   inputSelector.classList.remove(validationConfig.inputErrorClass);
   errorElement.classList.remove(validationConfig.errorClass);
