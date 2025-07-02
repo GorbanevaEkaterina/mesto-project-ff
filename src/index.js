@@ -37,6 +37,7 @@ import {
   profileAvatar,
   editAvatar,
   profileImageInput,
+  delitPopup
 } from "./components/constants.js";
 
 const changeSubmitTextOnLoad = (checkStatus, itemButton) => {
@@ -175,3 +176,5 @@ modalEditProfile.addEventListener("click", overlayClose);
 modalAddNewCard.addEventListener("click", overlayClose);
 editAvatar.addEventListener("click", overlayClose);
 modalTypeImage.addEventListener("click", overlayClose);
+delitPopup.addEventListener("click", overlayClose);
+

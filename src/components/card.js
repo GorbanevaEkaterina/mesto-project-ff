@@ -1,5 +1,7 @@
 import { putlikeCard, disLikeCard, deleteCard } from "./api.js";
 export { createCard, removeCard, likeCard };
+import { openModal, closeModal,overlayClose } from "./modal.js";
+import {delitPopup} from "./constants.js"
 
 const createCard = (
   data,
@@ -17,6 +19,9 @@ const createCard = (
   const likeCount = cardElement.querySelector(".card__like-counter");
   const titleCardItem = cardElement.querySelector(".card__title");
   const imageCardItem = cardElement.querySelector(".card__image");
+  
+  
+ 
 
   titleCardItem.textContent = data.name;
   imageCardItem.src = data.link;
@@ -30,8 +35,22 @@ const createCard = (
   }
 
   removeCardButton.addEventListener("click", () => {
+    openModal(delitPopup);
+ delitPopup.addEventListener("submit", () => {
     deleteCardItem(cardElement, data._id);
+    closeModal(delitPopup);
+  })
+  delitPopup.querySelectorAll(".popup__close").forEach(element => {
+    element.addEventListener('click', ()=> {
+      closeModal(delitPopup);
+     
+      
+    })
   });
+  
+    })
+
+  
 
   likeButton.addEventListener("click", () => {
     likeCardItem(likeButton, data._id, likeCount);

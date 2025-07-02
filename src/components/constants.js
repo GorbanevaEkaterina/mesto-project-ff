@@ -1,6 +1,6 @@
 // контейнер в который добавляю карточки cardСontainer
 export const cardСontainer = document.querySelector(".places__list");
-
+export const delitPopup = document.querySelector(".popup__type_delete");
 // кнопки, которые открывают модальные окна
 export const buttonOpenModalEditProfile = document.querySelector(
   ".profile__edit-button"
